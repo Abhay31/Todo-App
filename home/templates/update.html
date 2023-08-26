@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Todo App</title>
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
+        input::placeholder {
+            color: gray;
+        }
+
+        .center-column {
+            width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            box-shadow: 6px 2px 30px 0px rgba(0, 0, 0, 0.75);
+        }
+
+        .task-status {
+            display: flex;
+            align-items: left;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h3 class="text-center text-capitalize m-5" style="font-weight: bold; font-size: 50px;">Update Task</h3>
+    <div class="center-column ">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{form.task_title}}
+            <div class="task-status">
+                <h3 style="font-weight: 500; font-size: 20px;">Task Status:</h3>
+                <span style="margin-right: 390px;">{{form.task_complete}}</span>
+            </div>
+            <input class="btn btn-warning" type="submit" value="Update Task" name="Update Task">
+        </form>
+    </div>
+</body>
+
+</html>

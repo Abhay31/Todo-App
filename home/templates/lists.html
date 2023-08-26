@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Todo App</title>
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
+        input::placeholder {
+            color: gray;
+        }
+
+        .center-column {
+            width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            box-shadow: 6px 2px 30px 0px rgba(0, 0, 0, 0.75);
+        }
+
+        .item-row {
+            background-color: #906abd;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 16px;
+            box-shadow: 0px -1px 10px -4px rgba(0, 0, 0, 0.75);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h3 class="text-center text-capitalize mt-4" style="font-weight: bold; font-size: 50px;">Todo list</h3>
+    <div class="center-column">
+        <form method="POST" action="/">
+            {% csrf_token %}
+            {{form.task_title}}
+            <input class="btn btn-info" type="submit" value="Add Task" name="Create Task">
+        </form>
+        <div class="todo-list">
+            {% if tasks|length == 0 %}
+            <div class="item-row" style="display: flex; justify-content: center; align-items: center;">
+                <span style="color:#000000; font-weight: 500; font-size: 19px;">No Todos</span>
+            </div>
+            {% else %}
+                {% for task in tasks %}
+                    <div class="item-row" style="display: flex; justify-content: space-between; align-items: center;">
+                        {% if task.task_complete == False %}
+                        <i class="fa-regular fa-square" style="color: #000000; font-size: 20px;" title="Not completed"></i>
+                        {%else%}
+                        <i class="fa-solid fa-square-check" style="color: green; font-size: 20px;" title="Completed"></i>
+                        {%endif%}
+                        {% if task.task_complete == False %}
+                        <span style="color:#000000; font-weight: 500; font-size: 19px;">{{task.task_title}}</span>
+                        {%else%}
+                        <strike style="color:#000000; font-weight: 500; font-size: 19px;">{{task.task_title}}</strike>
+                        {%endif%}
+
+                        <div style="display: flex;">
+                            <a href="{% url 'update' task.id %}" style="margin-left: 10px;"><i
+                                    class="fa-regular fa-pen-to-square" title="Update"
+                                    style="color: #c6e624; font-size: 20px;"></i></a>
+                            <a href="/delete/{{task.id}}" style="margin-left: 10px;"><i class="fa-regular fa-trash-can"
+                                    title="Delete" style="color: red; font-size: 20px;"></i></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>
